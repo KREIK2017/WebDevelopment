@@ -1,0 +1,11 @@
+.ul-comment {
+    list-style-type:disc;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+textarea{
+    height: 70px;
+    width: 500px;
+}
