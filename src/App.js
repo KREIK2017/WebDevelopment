@@ -1,70 +1,71 @@
 import './css/App.css';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Header, Body, Footer, Menu } from './components/components';
 import ProductPage from './pages/ProductPage';
 
 function App() {
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [comments, setComments] = useState([]);
+  const products = [
+    { id: 1, name: 'Товар 1', description: 'Це детальне опис товару 1.', price: 230 },
+    { id: 2, name: 'Товар 2', description: 'Це детальне опис товару 2.', price: 300 },
+    { id: 3, name: 'Товар 3', description: 'Це детальне опис товару 3.', price: 150 },
+  ];
 
-  const [items, setItems] = useState([
-    { id: 1, name: 'Товар 1', isChecked: false },
-    { id: 2, name: 'Товар 2', isChecked: false },
-    { id: 3, name: 'Товар 3', isChecked: false },
-  ]);
-
-  const product = {
-    name: 'Товар 1',
-    description: 'Це детальний опис товару номер 1.',
-    price:'230',
-  };
   const exchangeRate = 38;
   const [isLogged, setIsLogged] = useState(false);
 
-  // Функція для зміни стану елемента при виборі чекбоксу
-
-  const handleCheckboxChange = (itemId) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, isChecked: !item.isChecked } : item
-      )
-    );
+  const handleProductSelect = (productId) => {
+    setSelectedProduct(products.find((product) => product.id === productId));
   };
 
-  // Функція для підрахунку кількості обраних товарів
-  
-  const calculateSelectedProductCount = useCallback(() => {
-    return items.filter((item) => item.isChecked).length;
-  }, [items]);
-
-  // Функція для зміни стану входу/виходу
-  const toggleLogin = () => {
-    setIsLogged((prevIsLogged) => !prevIsLogged);
+  const handleCommentAdd = (comment) => {
+    setComments([...comments, comment]);
   };
 
+  const convertPriceToUSD = () => {
+    if (selectedProduct && !isNaN(selectedProduct.price) && !isNaN(exchangeRate)) {
+      const priceInUSD = selectedProduct.price / exchangeRate;
+      setSelectedProduct({ ...selectedProduct, priceInUSD: priceInUSD.toFixed(2) });
+    }
+  };
 
   return (
     <div className="app">
-      <Header isLogged={isLogged} toggleLogin={toggleLogin} />
-      <Menu isLogged={isLogged} toggleLogin={toggleLogin} />
+      <Header isLogged={isLogged} toggleLogin={() => setIsLogged((prevIsLogged) => !prevIsLogged)} />
+      <Menu isLogged={isLogged} toggleLogin={() => setIsLogged((prevIsLogged) => !prevIsLogged)} />
       <Body />
-      
-  
-      <ul className='ul-product'>
-        {items.map((item) => (
-          <li key={item.id}>
-            <input
-              type="checkbox"
-              checked={item.isChecked}
-              onChange={() => handleCheckboxChange(item.id)}
-            />
-            {item.name}
+
+      <h1>Виберіть товар:</h1>
+      <ul className="ul-product">
+        {products.map((product) => (
+          <li key={product.id}>
+            <label>
+              <input
+                type="radio"
+                name="product"
+                value={product.id}
+                checked={selectedProduct?.id === product.id}
+                onChange={() => handleProductSelect(product.id)}
+              />
+              {product.name}
+            </label>
           </li>
         ))}
       </ul>
-      <ProductPage product={product} exchangeRate={exchangeRate}/>
-      <Footer selectedProductCount={calculateSelectedProductCount()} />
-      
+
+      {selectedProduct && (
+        <ProductPage
+          product={selectedProduct}
+          comments={comments}
+          onCommentAdd={handleCommentAdd}
+          exchangeRate={exchangeRate}
+          convertPriceToUSD={convertPriceToUSD}
+        />
+      )}
+
+      <Footer />
     </div>
-    
   );
 }
 

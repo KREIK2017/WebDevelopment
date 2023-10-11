@@ -1,9 +1,8 @@
 import React from 'react';
 
-function Footer({ selectedProductCount }) {
+function Footer() {
   return (
     <footer>
-      <p>Кількість обраних товарів: {selectedProductCount}</p>
     </footer>
   );
 }

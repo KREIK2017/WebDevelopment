@@ -9,7 +9,7 @@ function Menu({ isLogged, toggleLogin }) {
             <a href="/">Головна</a>
           </li>
           <li>
-            <a href="/products">Товари</a>
+            <a href="/product">Товари</a>
           </li>
           <li>
             <a href="/about">Про нас</a>
