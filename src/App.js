@@ -1,5 +1,5 @@
 import './css/App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header, Body, Footer, Menu } from './components/components';
 import ProductPage from './pages/ProductPage';
 
@@ -15,6 +15,14 @@ function App() {
   const exchangeRate = 38;
   const [isLogged, setIsLogged] = useState(false);
 
+
+  useEffect(() => {
+    if (selectedProduct) {
+      const priceInUSD = selectedProduct.price / exchangeRate;
+      setSelectedProduct({ ...selectedProduct, priceInUSD: priceInUSD.toFixed(2) });
+    }
+  }, [selectedProduct, exchangeRate]);
+  
   const handleProductSelect = (productId) => {
     setSelectedProduct(products.find((product) => product.id === productId));
   };
