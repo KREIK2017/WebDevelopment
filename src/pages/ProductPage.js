@@ -15,11 +15,16 @@ function ProductPage({ product, comments, onCommentAdd, exchangeRate, convertPri
   };
 
   useEffect(() => {
-    if (exchangeRate && !isNaN(product.price) && !isNaN(exchangeRate)) {
+    if (exchangeRate && product && !isNaN(product.price) && !isNaN(exchangeRate)) {
       const priceInUSD = product.price / exchangeRate;
       convertPriceToUSD(priceInUSD.toFixed(2));
     }
-  }, [product.price, exchangeRate, convertPriceToUSD]);
+  }, [product, exchangeRate, convertPriceToUSD]);
+
+  if (!product) {
+    // Додайте додаткову обробку, якщо product не визначено
+    return <div>Товар не вибраний</div>;
+  }
 
   return (
     <div>
@@ -33,8 +38,7 @@ function ProductPage({ product, comments, onCommentAdd, exchangeRate, convertPri
         ))}
       </ul>
 
-
-      <form onSubmit={handleCommentSubmit}  >
+      <form onSubmit={handleCommentSubmit}>
         <textarea className='textarea'
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
