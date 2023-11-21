@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Home, Products, About,Debug } from '../pages';
+import { Home, Products, About,Debug , AdminPage} from '../pages';
 import NavigationHistory from '../../context/NavigationHistory';
 
 function Menu({ isLogged, toggleLogin }) {
@@ -21,6 +21,9 @@ function Menu({ isLogged, toggleLogin }) {
             <li>
               <Link to="/debug">Debug</Link>
             </li>
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
             <li onClick={toggleLogin}>
               {isLogged ? 'Вийти' : 'Увійти'}
             </li>
@@ -32,6 +35,7 @@ function Menu({ isLogged, toggleLogin }) {
             <Route path="/products" element={<Products />} />
             <Route path="/about" element={<About />} />
             <Route path="/debug" element={<Debug />}></Route>
+            <Route path="/admin" element={<AdminPage />}></Route>
 
           </Routes>
           </NavigationHistory>
