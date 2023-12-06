@@ -1,0 +1,19 @@
+/* YourDialogStyles.css */
+.dialog-enter {
+    opacity: 0.01;
+  }
+  
+  .dialog-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+  
+  .dialog-exit {
+    opacity: 1;
+  }
+  
+  .dialog-exit-active {
+    opacity: 0.01;
+    transition: opacity 500ms ease-in;
+  }
+  
