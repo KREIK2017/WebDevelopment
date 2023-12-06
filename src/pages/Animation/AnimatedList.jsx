@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import '../../css/AnimatedList.css'; // Стилі для анімації
+import '../../css/AnimatedList.module.css'; // Стилі для анімації
 
 const AnimatedList = () => {
   const [items, setItems] = useState(['Item 1', 'Item 2', 'Item 3']);
