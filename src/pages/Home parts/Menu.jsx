@@ -4,6 +4,7 @@ import { Home, Products, About,Debug , AdminPage} from '../pages';
 import NavigationHistory from '../../context/NavigationHistory';
 
 function Menu({ isLogged, toggleLogin }) {
+  
   return (
     <>
       <Router>
